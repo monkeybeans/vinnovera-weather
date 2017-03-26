@@ -24,13 +24,14 @@ let cityIds = [];
 
 
 app
-  .use(bodyParser.json());
+  .use(bodyParser.json())
+  .use('/', express.static(`${__dirname}/assets`));
 
 app
   .get('/ping', (req, res) => {
     res.send('pong');
   })
-  .get('/weather/:city_id', (req, res) => {
+  .get('/api/v1/weather/:city_id', (req, res) => {
     console.log('INFO/weather/:city_id');
 
     const cityId = req.params.city_id;
@@ -39,7 +40,7 @@ app
 
     res.json(weatherCache.getCache(cityId));
   })
-  .get('/cities/:country_code/:city', (req, res) => {
+  .get('/api/v1/cities/:country_code/:city', (req, res) => {
     const city = req.params.city;
     const countryCode = req.params.country_code;
 
