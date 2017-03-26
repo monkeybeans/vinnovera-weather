@@ -1,8 +1,8 @@
 import express from 'express';
-import CityModel from './models/CityModel';
+import CityIdMap from './data/CityIdMap';
 import bodyParser from 'body-parser';
 import request from 'request';
-import City from './models/City';
+import CityModel from './models/CityModel';
 import WeatherCache from './data/WeatherCache';
 
 
@@ -14,13 +14,13 @@ const PORT = 8085;
 const weatherCache = new WeatherCache();
 weatherCache.startUpdater();
 
-const cityModel = new CityModel(`${__dirname}/data/city.list.jsons.txt`);
-cityModel.buildDataModel();
+const cityIdMap = new CityIdMap(`${__dirname}/data/city.list.jsons.txt`);
+cityIdMap.buildDataModel();
 
 
 const app = express();
 
-let cityIds = [];
+const cityIds = [];
 
 
 app
@@ -40,18 +40,12 @@ app
 
     res.json(weatherCache.getCache(cityId));
   })
-  .get('/api/v1/cities/:country_code/:city', (req, res) => {
-    const city = req.params.city;
-    const countryCode = req.params.country_code;
+  .get('/api/v1/cities/:city?', (req, res) => {
+    const city = req.params.city || '';
 
-    const match = cityModel.match(countryCode, city);
+    const matches = cityIdMap.match(city);
 
-    if (match) {
-      res.json(new City(match, countryCode, city));
-    } else {
-      res.json({});
-    }
-
+    res.json(matches);
   });
 
 
