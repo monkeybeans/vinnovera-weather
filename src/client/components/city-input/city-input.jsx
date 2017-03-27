@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { fetchCityId } from '../../api';
+import { addCity } from '../../data-flow';
 
 class CityInput extends React.Component {
   constructor(props) {
@@ -16,7 +18,13 @@ class CityInput extends React.Component {
   }
 
   onAddCity() {
-    console.log('ADD CITY: ', this.state.selectedCityId);
+    // TODO: check when selectedCityId is null
+    addCity(this.props.dispatch, this.state.selectedCityId);
+    this.setState({
+      location: '',
+      selectedCityId: null,
+      cities: [],
+    });
   }
 
   onSelectCity(e) {
@@ -45,7 +53,7 @@ class CityInput extends React.Component {
       <div>
         <div>How's the weather in...</div>
         <span>Location: </span>
-        <input type="text" onChange={this.updateLocation} />
+        <input type="text" value={this.state.location} onChange={this.updateLocation} />
         <select onChange={this.onSelectCity}>
           {
             this.state.cities.map(c => <option value={c.id} key={`${c.id}-${c.name}-${c.countryCode}`}>{ `${c.name}, ${c.countryCode}` }</option>)
@@ -57,4 +65,8 @@ class CityInput extends React.Component {
   }
 }
 
-export default CityInput;
+CityInput.propTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+};
+
+export default connect()(CityInput);
