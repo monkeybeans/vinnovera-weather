@@ -27,8 +27,9 @@ export function weatherReducer(state = [], action) {
     case actionsEnum.CITY_ADD:
       // TODO: better handling of doubbles
       if (cityIdIndx === -1) {
-        stateCpy.concat(action.cityId);
+        stateCpy.push(action.cityId);
       }
+      console.log('adding id: ', stateCpy, action.cityId);
       return stateCpy;
     case actionsEnum.CITY_REMOVE:
       if (cityIdIndx !== -1) {

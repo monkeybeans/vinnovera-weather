@@ -19,7 +19,7 @@ class CityInput extends React.Component {
 
   onAddCity() {
     // TODO: check when selectedCityId is null
-    addCity(this.props.dispatch, this.state.selectedCityId);
+    addCity(this.props.dispatch, this.select.value);
     this.setState({
       location: '',
       selectedCityId: null,
@@ -30,6 +30,7 @@ class CityInput extends React.Component {
   onSelectCity(e) {
     const el = e.currentTarget;
     const cityId = el.options[el.selectedIndex].value;
+    console.info('Select id: ', cityId);
     this.setState({ selectedCityId: cityId });
   }
 
@@ -54,7 +55,7 @@ class CityInput extends React.Component {
         <div>How's the weather in...</div>
         <span>Location: </span>
         <input type="text" value={this.state.location} onChange={this.updateLocation} />
-        <select onChange={this.onSelectCity}>
+        <select ref={(select) => { this.select = select; }}>
           {
             this.state.cities.map(c => <option value={c.id} key={`${c.id}-${c.name}-${c.countryCode}`}>{ `${c.name}, ${c.countryCode}` }</option>)
           }

@@ -8,7 +8,7 @@ class WeatherInfo extends React.Component {
   render() {
     return (
       <div>
-        <span>WHEATHER LOG</span>
+        <span>WHEATHER LOG { this.props.cityId }</span>
         <span>
           <div>Temprature</div>
           <div>City, Coutry</div>
@@ -18,5 +18,9 @@ class WeatherInfo extends React.Component {
     );
   }
 }
+
+WeatherInfo.propTypes = {
+  cityId: React.PropTypes.string.isRequired,
+};
 
 export default WeatherInfo;
