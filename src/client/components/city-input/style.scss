@@ -58,7 +58,9 @@ $confirm-color: #D0D752;
       width: 100%;
       border: none;
       border-radius: 0;
-      -webkit-appearance: none;
+      //-webkit-appearance: none;
+      box-shadow: 13px 6px 15px grey;
+
     }
   }
 }

@@ -57,6 +57,22 @@ class CityInput extends React.Component {
     });
   }
 
+  renderSuggestions() {
+    if (this.state.cityModels.length === 0) {
+      return null;
+    }
+
+    return (
+      <div className="city-input__suggestions">
+        <select ref={(select) => { this.select = select; }}>
+          {
+            this.state.cityModels.map(c => <option value={c.id} key={`${c.id}-${c.name}-${c.countryCode}`}>{ `${c.name}, ${c.countryCode}` }</option>)
+          }
+        </select>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="city-input">
@@ -67,13 +83,7 @@ class CityInput extends React.Component {
           </label>
           <button onClick={this.onAddCity}>+</button>
         </div>
-        <div className="city-input__suggestions">
-          <select ref={(select) => { this.select = select; }}>
-            {
-              this.state.cityModels.map(c => <option value={c.id} key={`${c.id}-${c.name}-${c.countryCode}`}>{ `${c.name}, ${c.countryCode}` }</option>)
-            }
-          </select>
-        </div>
+        { this.renderSuggestions() }
       </div>
     );
   }
