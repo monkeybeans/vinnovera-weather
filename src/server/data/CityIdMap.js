@@ -1,6 +1,6 @@
 import readline from 'readline';
 import fs from 'fs';
-import CityModel from '../models/CityModel';
+import CityModel from '../../models/CityModel';
 
 class CityIdMap {
   constructor(dataPath) {
@@ -21,13 +21,17 @@ class CityIdMap {
       const countryCode = data.country;
       const city = data.name.toLowerCase();
 
-      const cityModel = new CityModel(id, countryCode, city);
+      const cityModel = new CityModel(id, city, countryCode);
 
       if (!self.dataModel[city]) {
         self.dataModel[city] = [];
       }
 
-      self.dataModel[city].push(cityModel);
+      const isCityModelUnique = self.dataModel[city].every(m => !cityModel.equals(m));
+
+      if (isCityModelUnique || cityModel.valid()) {
+        self.dataModel[city].push(cityModel);
+      }
     });
 
     lineReader.on('close', () => {

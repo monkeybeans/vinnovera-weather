@@ -29,7 +29,6 @@ export function weatherReducer(state = [], action) {
       if (cityIdIndx === -1) {
         stateCpy.push(action.cityId);
       }
-      console.log('adding id: ', stateCpy, action.cityId);
       return stateCpy;
     case actionsEnum.CITY_REMOVE:
       if (cityIdIndx !== -1) {

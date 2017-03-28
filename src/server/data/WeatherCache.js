@@ -1,5 +1,5 @@
 import request from 'request';
-
+import { WeatherModel } from '../../models';
 
 const OPW_API_KEY = '7fbb5ff0d0aa5e2594b9c4eae2c02f07_INACTIVE';
 const OPW_API_QUERY = `APPID=${OPW_API_KEY}`;
@@ -60,8 +60,9 @@ class WeatherCache {
   getCache(cityId) {
     // replace getTestData() with this.weatherCache;
 
-    const cityData = getTestData().list.filter(d => d.id == cityId).pop() || {};
-    return cityData;
+    const cd = getTestData().list.filter(d => d.id == cityId).pop() || {};
+
+    return new WeatherModel(cd.id, cd.name, cd.sys.country, cd.main.temp, cd.weather[0].icon);
   }
 }
 

@@ -20,6 +20,7 @@ the output will tell you what to do from there...
 * app with responseive basic styling
 
 ## Extras
+* precache big cities
 * elastic search for cities
 * deploy on public server
 * speed up loading time

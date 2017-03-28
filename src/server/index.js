@@ -1,15 +1,9 @@
 import express from 'express';
-import CityIdMap from './data/CityIdMap';
 import bodyParser from 'body-parser';
-import request from 'request';
-import CityModel from './models/CityModel';
+import CityIdMap from './data/CityIdMap';
 import WeatherCache from './data/WeatherCache';
 
-
-const BUST_WEATHER_CACHE_MS = 1000 * 10;
-
 const PORT = 8085;
-
 
 const weatherCache = new WeatherCache();
 weatherCache.startUpdater();
@@ -17,11 +11,7 @@ weatherCache.startUpdater();
 const cityIdMap = new CityIdMap(`${__dirname}/data/city.list.jsons.txt`);
 cityIdMap.buildDataModel();
 
-
 const app = express();
-
-const cityIds = [];
-
 
 app
   .use(bodyParser.json())
@@ -47,7 +37,6 @@ app
 
     res.json(matches);
   });
-
 
 app.listen(PORT, () => {
   console.log(`Listening http://localhost:${PORT}`);

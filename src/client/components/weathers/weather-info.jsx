@@ -1,8 +1,16 @@
 import React from 'react';
+import { fetchWeather } from '../../api';
 
 class WeatherInfo extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  updateWeather() {
+    const cityId = this.props.cityId;
+
+    fetchWeather(cityId)
+    .then();
   }
 
   render() {
@@ -13,7 +21,7 @@ class WeatherInfo extends React.Component {
           <div>Temprature</div>
           <div>City, Coutry</div>
         </span>
-        <span>close button</span>
+        <span>x</span>
       </div>
     );
   }

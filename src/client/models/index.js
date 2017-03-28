@@ -1,1 +1,0 @@
-export { WeatherModel } from './WeatherModel';

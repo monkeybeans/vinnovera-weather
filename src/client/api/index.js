@@ -1,5 +1,6 @@
 import api from 'superagent';
 import CityModel from '../models/CityModel';
+import WeatherModel from '../models/WeatherModel';
 
 const ORIGIN = window.location.origin;
 const API_PATH = 'api/v1';
@@ -32,7 +33,8 @@ export function fetchWeather(cityId) {
         reject(err);
       } else {
         const data = JSON.stringify(res.body);
-        resolve({
+        resolve(new WeatherModel());
+        {
           id: data.id,
           cityName: data.city_name,
           country: data.country,
