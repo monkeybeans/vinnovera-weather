@@ -1,8 +1,8 @@
 export default class CityModel {
   constructor(id, name, countryCode) {
-    this.id = id;
-    this.name = name.toLowerCase();
-    this.countryCode = countryCode.toLowerCase();
+    this.id = id || null;
+    this.name = name ? name.toLowerCase() : '';
+    this.countryCode = countryCode ? countryCode.toLowerCase() : '';
   }
 
   equals(instance) {

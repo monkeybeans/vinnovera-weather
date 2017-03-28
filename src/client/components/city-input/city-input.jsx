@@ -10,7 +10,7 @@ class CityInput extends React.Component {
     this.state = {
       location: '',
       selectedCityId: null,
-      cities: [],
+      cityModels: [],
     };
     this.updateLocation = this.updateLocation.bind(this);
     this.onSelectCity = this.onSelectCity.bind(this);
@@ -23,7 +23,7 @@ class CityInput extends React.Component {
     this.setState({
       location: '',
       selectedCityId: null,
-      cities: [],
+      cityModels: [],
     });
   }
 
@@ -41,7 +41,7 @@ class CityInput extends React.Component {
     fetchCityId(location)
     .then((cityModels) => {
       this.setState({
-        cities: cityModels,
+        cityModels,
       });
     })
     .catch((err) => {
@@ -52,12 +52,12 @@ class CityInput extends React.Component {
   render() {
     return (
       <div>
-        <div>How's the weather in...</div>
+        <div>How&#39;s the weather in...</div>
         <span>Location: </span>
         <input type="text" value={this.state.location} onChange={this.updateLocation} />
         <select ref={(select) => { this.select = select; }}>
           {
-            this.state.cities.map(c => <option value={c.id} key={`${c.id}-${c.name}-${c.countryCode}`}>{ `${c.name}, ${c.countryCode}` }</option>)
+            this.state.cityModels.map(c => <option value={c.id} key={`${c.id}-${c.name}-${c.countryCode}`}>{ `${c.name}, ${c.countryCode}` }</option>)
           }
         </select>
         <span onClick={this.onAddCity} >+</span>

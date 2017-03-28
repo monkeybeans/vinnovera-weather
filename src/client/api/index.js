@@ -1,12 +1,12 @@
 import api from 'superagent';
-import CityModel from '../models/CityModel';
-import WeatherModel from '../models/WeatherModel';
+import CityModel from '../../models/CityModel';
+import WeatherModel from '../../models/WeatherModel';
 
 const ORIGIN = window.location.origin;
 const API_PATH = 'api/v1';
 
 const URL_API_CITY_ID = `${ORIGIN}/${API_PATH}/cities`;
-const URL_API_WEATHERS = `${ORIGIN}/${API_PATH}/weather`;
+const URL_API_WEATHER = `${ORIGIN}/${API_PATH}/weather`;
 
 
 export function fetchCityId(cityName) {
@@ -18,7 +18,7 @@ export function fetchCityId(cityName) {
         reject(err);
       } else {
         const data = res.body;
-        resolve(data.map(d => new CityModel(d.city_id, d.name, d.country_code)));
+        resolve(data.map(d => Object.assign(new CityModel(), d)));
       }
     });
   });
@@ -27,20 +27,13 @@ export function fetchCityId(cityName) {
 export function fetchWeather(cityId) {
   return new Promise((resolve, reject) => {
     api
-    .get(`${URL_API_WEATHERS}/${cityId}`)
+    .get(`${URL_API_WEATHER}/${cityId}`)
     .end((err, res) => {
       if (err) {
         reject(err);
       } else {
-        const data = JSON.stringify(res.body);
-        resolve(new WeatherModel());
-        {
-          id: data.id,
-          cityName: data.city_name,
-          country: data.country,
-          temprature: data.temprature,
-          weatherTerm: data.weather_term,
-        });
+        const data = res.body;
+        resolve(Object.assign(new WeatherModel(), data));
       }
     });
   });

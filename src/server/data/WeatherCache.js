@@ -62,7 +62,7 @@ class WeatherCache {
 
     const cd = getTestData().list.filter(d => d.id == cityId).pop() || {};
 
-    return new WeatherModel(cd.id, cd.name, cd.sys.country, cd.main.temp, cd.weather[0].icon);
+    return new WeatherModel(cd.id, cd.name, cd.sys && cd.sys.country, cd.main && cd.main.temp, cd.weather && cd.weather[0].icon);
   }
 }
 

@@ -15,8 +15,8 @@ the output will tell you what to do from there...
 * ~~server that fetch weather data~~
 * ~~endpoint for valid cities~~
 * ~~caching of weather data so the api doesn't reject~~
-* input box for cities
-* container for city weathers
+* ~~input box for cities~~
+* ~~container for city weathers~~
 * app with responseive basic styling
 
 ## Extras
