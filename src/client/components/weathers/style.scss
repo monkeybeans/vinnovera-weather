@@ -1,0 +1,72 @@
+.hot {
+  background: #DF9C6E;
+}
+.warm {
+  background: #DFA658;
+}
+.cold {
+  background: #9AD9EB;
+}
+.freezing {
+  background: darken(#9AD9EB, 30%);
+}
+
+.weathers {
+  padding-top: 7rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap
+}
+
+.weather-info {
+  padding: 2rem;
+  height: 20rem;
+  width: 40rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  position: relative;
+  background-color: grey;
+
+  .hot {
+    background: #DF9C6E;
+  }
+  .warm {
+    background: #DFA658;
+  }
+  .cold {
+    background: #9AD9EB;
+  }
+  .freezing {
+    background: darken(#9AD9EB, 30%);
+  }
+
+  &__icon {
+  }
+
+  &__temprature {
+    text-align: center;
+
+    div:first-child {
+      font-size: 6rem;
+    }
+  }
+
+  &__remove {
+    position: absolute;
+    background: #fff;
+    height: 35px;
+    width: 35px;
+    color: gray;
+    right: 35px;
+    top: 15px;
+    font-size: 35px;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+}

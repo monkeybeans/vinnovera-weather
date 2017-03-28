@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchCityId } from '../../api';
 import { addCity } from '../../data-flow';
-import './style.scss';
 
 class CityInput extends React.Component {
   constructor(props) {
@@ -20,7 +19,7 @@ class CityInput extends React.Component {
 
   onAddCity() {
     // TODO: check when selectedCityId is null
-    const cityId = this.select.value;
+    const cityId = this.select ? this.select.value : -1;
     const choosenCityModel = this.state.cityModels.filter(m => m.id == cityId).pop();
 
     if (!choosenCityModel || !choosenCityModel.valid()) { return; }

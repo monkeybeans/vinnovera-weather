@@ -13,10 +13,10 @@ function addCity(dispatch, cityId) {
 }
 
 function removeCity(dispatch, cityId) {
-  return {
+  dispatch({
     type: actionsEnum.CITY_REMOVE,
     cityId,
-  };
+  });
 }
 
 export function weatherReducer(state = [], action) {
@@ -31,8 +31,9 @@ export function weatherReducer(state = [], action) {
       }
       return stateCpy;
     case actionsEnum.CITY_REMOVE:
+      console.log('cityIdIndx', cityIdIndx);
       if (cityIdIndx !== -1) {
-        rmIndx.splice(cityIdIndx, 1);
+        stateCpy.splice(cityIdIndx, 1);
       }
       return stateCpy;
     default:

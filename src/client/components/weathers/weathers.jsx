@@ -9,7 +9,7 @@ class Weathers extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="weathers">
         { this.props.state.map(id => <WeatherInfo key={`weather-info-$${id}`} cityId={id} />)}
       </div>
     );

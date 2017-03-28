@@ -1,11 +1,29 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { fetchWeather } from '../../api';
 import { WeatherModel } from '../../../models';
+import { removeCity } from '../../data-flow';
+
+const calculateTempFeeling = (temp) => {
+  const temprature = Number.parseInt(temp, 10);
+
+  if (temprature > 25) {
+    return 'hot';
+  } else if (temprature > 15) {
+    return 'warm';
+  } else if (temprature > 5) {
+    return 'cold';
+  }
+
+  return 'freezing';
+};
+
 
 class WeatherInfo extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onRemove = this.onRemove.bind(this);
     this.state = {
       weatherModel: new WeatherModel(),
     };
@@ -13,6 +31,10 @@ class WeatherInfo extends React.Component {
 
   componentWillMount() {
     this.updateWeather();
+  }
+
+  onRemove() {
+    removeCity(this.props.dispatch, this.props.cityId);
   }
 
   updateWeather() {
@@ -29,12 +51,13 @@ class WeatherInfo extends React.Component {
 
   render() {
     const { weatherModel } = this.state;
+    const tempFeel = calculateTempFeeling(weatherModel.temprature);
     let content = <div>Waiting for data, could take up to 10 minutes...</div>;
     if (weatherModel.valid()) {
       content = (
-        <div>
-          <span>{ weatherModel.icon }</span>
-          <span>
+        <div className={`weather-info ${tempFeel}`}>
+          <span className="weather-info__icon">{ weatherModel.icon }</span>
+          <span className="weather-info__temperature">
             <div>{ weatherModel.temprature } &#176;C</div>
             <div>{ `${weatherModel.cityName}, ${weatherModel.countryName}`}</div>
           </span>
@@ -43,9 +66,9 @@ class WeatherInfo extends React.Component {
     }
 
     return (
-      <div className="wheather-info">
+      <div className="weather-info">
         { content }
-        <span>x</span>
+        <span onClick={this.onRemove} className="weather-info__remove">x</span>
       </div>
     );
   }
@@ -53,6 +76,7 @@ class WeatherInfo extends React.Component {
 
 WeatherInfo.propTypes = {
   cityId: React.PropTypes.string.isRequired,
+  dispatch: React.PropTypes.func.isRequired,
 };
 
-export default WeatherInfo;
+export default connect()(WeatherInfo);
