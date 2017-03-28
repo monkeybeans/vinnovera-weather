@@ -18,7 +18,6 @@ class CityInput extends React.Component {
   }
 
   onAddCity() {
-    // TODO: check when selectedCityId is null
     const cityId = this.select ? this.select.value : -1;
     const choosenCityModel = this.state.cityModels.filter(m => m.id == cityId).pop();
 
@@ -42,7 +41,7 @@ class CityInput extends React.Component {
   }
 
   updateLocation(e) {
-    const location = e.currentTarget.value;
+    const location = e.currentTarget.value.trim();
 
     this.setState({ location });
     fetchCityId(location)

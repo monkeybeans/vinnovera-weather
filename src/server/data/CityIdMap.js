@@ -29,7 +29,7 @@ class CityIdMap {
 
       const isCityModelUnique = self.dataModel[city].every(m => !cityModel.equals(m));
 
-      if (isCityModelUnique || cityModel.valid()) {
+      if (isCityModelUnique && cityModel.valid()) {
         self.dataModel[city].push(cityModel);
       }
     });

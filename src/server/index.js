@@ -6,6 +6,7 @@ import WeatherCache from './data/WeatherCache';
 const PORT = 8085;
 
 const weatherCache = new WeatherCache();
+weatherCache.updateCityIds(2673730, 2711537, 2692969, 5128638, 2950159, 2643743);
 weatherCache.startUpdater();
 
 const cityIdMap = new CityIdMap(`${__dirname}/data/city.list.jsons.txt`);
@@ -39,5 +40,5 @@ app
   });
 
 app.listen(PORT, () => {
-  console.log(`Listening http://localhost:${PORT}`);
+  console.log(`Listening http://localhost:${PORT}, time: ${new Date().toString()}`);
 });

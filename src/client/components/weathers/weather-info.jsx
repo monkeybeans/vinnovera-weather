@@ -13,9 +13,11 @@ const calculateTempFeeling = (temp) => {
     return 'warm';
   } else if (temprature > 5) {
     return 'cold';
+  } else if (temprature < -5) {
+    return 'freezing';
   }
 
-  return 'freezing';
+  return '';
 };
 
 
@@ -55,7 +57,7 @@ class WeatherInfo extends React.Component {
     let content = <div>Waiting for data, could take up to 10 minutes...</div>;
     if (weatherModel.valid()) {
       content = (
-        <div className={`weather-info ${tempFeel}`}>
+        <div className="weather-info__content">
           <span className="weather-info__icon">{ weatherModel.icon }</span>
           <span className="weather-info__temperature">
             <div>{ weatherModel.temprature } &#176;C</div>
@@ -66,7 +68,7 @@ class WeatherInfo extends React.Component {
     }
 
     return (
-      <div className="weather-info">
+      <div className={`weather-info ${tempFeel}`}>
         { content }
         <span onClick={this.onRemove} className="weather-info__remove">x</span>
       </div>

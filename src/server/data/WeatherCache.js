@@ -1,11 +1,11 @@
 import request from 'request';
 import { WeatherModel } from '../../models';
 
-const OPW_API_KEY = '7fbb5ff0d0aa5e2594b9c4eae2c02f07_INACTIVE';
+const OPW_API_KEY = '7fbb5ff0d0aa5e2594b9c4eae2c02f07';
 const OPW_API_QUERY = `APPID=${OPW_API_KEY}`;
 const OPW_WEATHER_URL = `http://api.openweathermap.org/data/2.5/group?${OPW_API_QUERY}&units=metric`;
 
-const CACHE_BUST_MS = 1000 * 60 * 60 * 11;
+const CACHE_BUST_MS = 1000 * 60 * 11;
 class WeatherCache {
 
   constructor() {
@@ -14,9 +14,10 @@ class WeatherCache {
   }
 
   updateCityIds(...ids) {
+    const self = this;
     ids.forEach((id) => {
-      if (this.cityIds.indexOf(id) === -1) {
-        this.cityIds.push(id);
+      if (self.cityIds.indexOf(id) === -1) {
+        self.cityIds.push(id);
       }
     });
 
@@ -27,11 +28,11 @@ class WeatherCache {
 
   startUpdater(cacheBustMs = CACHE_BUST_MS) {
     if (cacheBustMs < CACHE_BUST_MS) {
-      console.error('CACHE BUST MS TIME TO LOW: ', CACHE_BUST_MS);
-      // throw new Error(`CACHE BUST MS TIME TO LOW: ${CACHE_BUST_MS}`);
+      throw new Error(`CACHE BUST MS TIME TO LOW: ${cacheBustMs}`);
     }
 
-    this.updateWatherCache();
+    console.info('Staring timer for caching weather, intervall(min): ', cacheBustMs / 1000 / 60);
+    // this.updateWatherCache();
     this.intervallId = setInterval(this.updateWatherCache.bind(this), cacheBustMs);
   }
 
@@ -41,26 +42,27 @@ class WeatherCache {
 
   updateWatherCache() {
     const now = new Date();
+    const self = this;
 
-    const weatherUrl = `${OPW_WEATHER_URL}&id=${this.cityIds.join(',')}`;
-    if (now.getMilliseconds() === 0 && now.getSeconds() === 0 && (now.getMinutes % 11 === 0)) {
+    if (this.cityIds.length !== 0) {
+      const weatherUrl = `${OPW_WEATHER_URL}&id=${this.cityIds.join(',')}`;
       request(weatherUrl, (err, response, body) => {
-        if (err) {
-          console.log('ERROR: could not update the weather cache');
+        console.info('===> Request for weather: ', now);
+        if (err || response.statusCode !== 200) {
+          console.error(`<=== Could not update the weather cache, status = ${response.statusCode}, url = ${weatherUrl}`);
         } else {
-          console.log('INFO: weather cache is now updated');
-          this.weatherCache = body;
+          console.info('<=== Weather cache is now updated');
+          self.weatherCache = JSON.parse(body);
         }
       });
     } else {
-      console.log(`Would have requested: ${weatherUrl}`);
+      console.info('skipping update as there are no requested city ids');
     }
   }
 
   getCache(cityId) {
-    // replace getTestData() with this.weatherCache;
-
-    const cd = getTestData().list.filter(d => d.id == cityId).pop() || {};
+    // const cd = getTestData().list.filter(d => d.id == cityId).pop() || {};
+    const cd = (this.weatherCache && this.weatherCache.list.filter(d => d.id == cityId).pop()) || {};
 
     return new WeatherModel(cd.id, cd.name, cd.sys && cd.sys.country, cd.main && cd.main.temp, cd.weather && cd.weather[0].icon);
   }

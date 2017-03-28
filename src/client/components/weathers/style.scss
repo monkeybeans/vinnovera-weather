@@ -23,25 +23,31 @@
   padding: 2rem;
   height: 20rem;
   width: 40rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  color: #fff;
   position: relative;
   background-color: grey;
+  margin: 0 1rem;
+  color: #fff;
 
-  .hot {
+
+  &.hot {
     background: #DF9C6E;
   }
-  .warm {
+  &.warm {
     background: #DFA658;
   }
-  .cold {
+  &.cold {
     background: #9AD9EB;
   }
-  .freezing {
+  &.freezing {
     background: darken(#9AD9EB, 30%);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
   }
 
   &__icon {
@@ -50,10 +56,11 @@
   &__temprature {
     text-align: center;
 
-    div:first-child {
+    > div:first-child {
       font-size: 6rem;
     }
   }
+
 
   &__remove {
     position: absolute;
