@@ -1,0 +1,11 @@
+$background-from: #F7F2D8;
+$background-to: #B7D5DF;
+
+html {
+  background: linear-gradient(125deg, $background-from 0%, $background-to 100%) no-repeat center center fixed;
+  background-size: cover;
+}
+
+body * {
+  font-size: 3rem;
+}

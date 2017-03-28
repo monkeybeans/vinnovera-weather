@@ -25,3 +25,4 @@ the output will tell you what to do from there...
 * deploy on public server
 * speed up loading time
 * preserve state with a cookie
+* add style prefix
