@@ -15,6 +15,6 @@ export default class CityModel {
     const self = this;
     return Object
       .keys(self)
-      .every(k => self[k] !== null && self[k] !== undefined && self[k].length > 0);
+      .every(k => self[k] !== null && self[k] !== undefined && self[k] !== '');
   }
 }

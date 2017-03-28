@@ -11,26 +11,26 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <Grid>
-          <Col xs={12} xsHidden smHidden>
-            <Row >
+          <Row>
+            <Col xs={12} xsHidden smHidden>
               <AppLogo />
-            </Row>
-          </Col>
-          <Col xs={1} md={4} mdOffset={4}>
-            <Row>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} sm={12} md={12} lg={8} lgPush={2}>
               <CityInput />
-            </Row>
-          </Col>
-          <Col>
-            <Row>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
               <Weathers />
-            </Row>
-          </Col>
-          <Col xs={12} lgHidden mdHidden>
-            <Row >
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={12} lgHidden mdHidden>
               <AppLogo />
-            </Row>
-          </Col>
+            </Col>
+          </Row>
         </Grid>
       </Provider>
     );

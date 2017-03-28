@@ -1,11 +1,25 @@
 $background-from: #F7F2D8;
 $background-to: #B7D5DF;
 
+body {
+  background: transparent;
+}
+
 html {
   background: linear-gradient(125deg, $background-from 0%, $background-to 100%) no-repeat center center fixed;
   background-size: cover;
 }
 
+html *,
 body * {
+  font-family: 'Lato', sans-serif;
   font-size: 3rem;
+}
+
+*:focus {
+    outline: none;
+}
+
+.pacifico {
+  font-family: 'Pacifico', cursive;
 }

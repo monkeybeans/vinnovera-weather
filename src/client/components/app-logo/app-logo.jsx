@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './style.scss';
 
 class AppLogo extends React.Component {
   constructor(props) {
@@ -8,8 +8,8 @@ class AppLogo extends React.Component {
 
   render() {
     return (
-      <div>
-        <span>A LOGO</span><span>Vinnovera</span>
+      <div className="app-logo">
+        <span>Vinnovera Work Test</span>
       </div>
     );
   }

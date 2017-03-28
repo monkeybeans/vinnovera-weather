@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchCityId } from '../../api';
 import { addCity } from '../../data-flow';
+import './style.scss';
 
 class CityInput extends React.Component {
   constructor(props) {
@@ -19,6 +20,11 @@ class CityInput extends React.Component {
 
   onAddCity() {
     // TODO: check when selectedCityId is null
+    const cityId = this.select.value;
+    const choosenCityModel = this.state.cityModels.filter(m => m.id == cityId).pop();
+
+    if (!choosenCityModel || !choosenCityModel.valid()) { return; }
+
     addCity(this.props.dispatch, this.select.value);
     this.setState({
       location: '',
@@ -31,7 +37,9 @@ class CityInput extends React.Component {
     const el = e.currentTarget;
     const cityId = el.options[el.selectedIndex].value;
     console.info('Select id: ', cityId);
-    this.setState({ selectedCityId: cityId });
+    this.setState({
+      selectedCityId: cityId,
+    });
   }
 
   updateLocation(e) {
@@ -51,16 +59,21 @@ class CityInput extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>How&#39;s the weather in...</div>
-        <span>Location: </span>
-        <input type="text" value={this.state.location} onChange={this.updateLocation} />
-        <select ref={(select) => { this.select = select; }}>
-          {
-            this.state.cityModels.map(c => <option value={c.id} key={`${c.id}-${c.name}-${c.countryCode}`}>{ `${c.name}, ${c.countryCode}` }</option>)
-          }
-        </select>
-        <span onClick={this.onAddCity} >+</span>
+      <div className="city-input">
+        <div className="pacifico">How&#39;s the weather in...</div>
+        <div className="city-input__search">
+          <label htmlFor="input-city-name">Location:
+            <input id="input-city-name" type="text" value={this.state.location} onChange={this.updateLocation} placeholder="Enter a city name..." />
+          </label>
+          <button onClick={this.onAddCity}>+</button>
+        </div>
+        <div className="city-input__suggestions">
+          <select ref={(select) => { this.select = select; }}>
+            {
+              this.state.cityModels.map(c => <option value={c.id} key={`${c.id}-${c.name}-${c.countryCode}`}>{ `${c.name}, ${c.countryCode}` }</option>)
+            }
+          </select>
+        </div>
       </div>
     );
   }

@@ -1,0 +1,64 @@
+$background-from: #FBF9EE;
+$background-to: #E8ECE7;
+$confirm-color: #D0D752;
+
+.city-input {
+  background: linear-gradient(125deg, $background-from 0%, $background-to 100%) no-repeat center center fixed;
+  background-size: cover;
+  padding: 4rem 5rem;
+  margin-top: 50%;
+  text-align: center;
+
+  > {
+    display: inline-block;
+  }
+
+  div:first-child {
+    padding: 2rem;
+  }
+
+  &__search {
+    background: #FFF;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    box-shadow: 13px 12px 15px grey;
+
+    /* location */
+    label {
+      font-weight: bold;
+      padding-left: 2rem;
+      margin: 0;
+      line-height: 5rem;
+
+      /* search field */
+      input {
+        padding-left: 1rem;
+        font-weight: normal;
+        border: none;
+      }
+    }
+
+    /* add city */
+    button {
+      border: none;
+      background: transparent;
+      font-size: 5rem;
+      line-height: 5rem;
+      color: $confirm-color;
+      font-weight: bold;
+    }
+  }
+
+  &__suggestions {
+    /* select match */
+    select {
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+  }
+}
