@@ -15,10 +15,6 @@ test.beforeEach((t) => {
   t.context.wrapper = shallow(<CityInput dispatch={dispatch} />); // eslint-disable-line no-param-reassign
 });
 
-test('when posting for a city id match, only the city name should be posted', (t) => {
-  t.fail('not implemented');
-});
-
 test('the state get updated with city name and country code', async (t) => {
   nockApi([new CityModel(123, 'Bon', 'GE')]);
   const wrapper = t.context.wrapper;

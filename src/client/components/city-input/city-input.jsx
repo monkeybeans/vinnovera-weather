@@ -81,10 +81,11 @@ class CityInput extends React.Component {
 
     return (
       <div className="city-input__input-and-add">
-        <label htmlFor="input-city-name">Location:
+        <label htmlFor="input-city-name">Location:</label>
+        <div className="city-input__query-fields">
           <input id="input-city-name" autoFocus type="text" value={location} onChange={this.updateLocation} placeholder="Enter a city name..." />
-          <span>{ countryCodePart }</span>
-        </label>
+          <input type="text" readOnly value={`${location}${countryCodePart}`} />
+        </div>
         <button onClick={this.onAddCity}>+</button>
       </div>
     );

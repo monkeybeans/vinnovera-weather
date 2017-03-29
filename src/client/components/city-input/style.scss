@@ -34,14 +34,8 @@ $text-color: #000;
       padding-left: 2rem;
       margin: 0;
       line-height: 5rem;
-
-      /* search field */
-      input {
-        padding-left: 1rem;
-        font-weight: normal;
-        border: none;
-      }
     }
+
 
     /* add city */
     button {
@@ -51,6 +45,25 @@ $text-color: #000;
       line-height: 5rem;
       color: $confirm-color;
       font-weight: bold;
+    }
+  }
+
+  &__query-fields {
+    position: relative;
+    > input {
+      position: relative;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      border: none;
+      background: transparent;
+    }
+
+    > input:nth-child(2) {
+      position: absolute;
+      z-index: 2;
+      color: $text-color;
+      background: #fff;
     }
   }
 
