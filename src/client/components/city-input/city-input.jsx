@@ -10,7 +10,8 @@ class CityInput extends React.Component {
     super(props);
 
     this.state = {
-      location: '',
+      inputCity: '',
+      inputCountryCode: '',
       selectedCityId: null,
       cityModels: [],
     };
@@ -55,13 +56,13 @@ class CityInput extends React.Component {
   }
 
   updateLocation(e) {
-    const location = e.currentTarget.value.trim();
+    const location = e.currentTarget.value;
 
     this.setState({
       inputCity: location,
     });
 
-    fetchCityId(location)
+    fetchCityId(location.trim())
     .then((cityModels) => {
       this.setState({
         cityModels,
