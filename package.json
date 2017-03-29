@@ -4,12 +4,23 @@
   "description": "weather app displaying current city weather",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ava",
     "start": "babel-node ./src/server/index.js",
     "build:client": "webpack"
   },
   "author": "",
-  "license": "ISC",
+  "license": "UNLICEND",
+  "ava": {
+    "require": [
+      "babel-register",
+      "babel-polyfill",
+      "./test/helpers/browser-setup.js"
+    ],
+    "source": [
+      "./src/**/*.{js,jsx}"
+    ],
+    "babel": "inherit"
+  },
   "dependencies": {
     "apicache": "^0.8.4",
     "babel-preset-react": "^6.23.0",
@@ -27,18 +38,29 @@
     "superagent": "^3.5.2"
   },
   "devDependencies": {
+    "ava": "^0.18.2",
     "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.2.2",
+    "babel-register": "^6.24.0",
+    "browser-env": "^2.0.27",
     "css-loader": "^0.27.3",
+    "enzyme": "^2.8.0",
     "eslint": "^3.18.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
+    "ignore-styles": "^5.0.1",
+    "jsdom": "^9.12.0",
+    "nock": "^9.0.10",
     "node-sass": "^4.5.1",
+    "react-addons-test-utils": "^15.4.2",
     "redux-devtools": "^3.3.2",
     "sass-loader": "^6.0.3",
+    "sinon": "^2.1.0",
     "style-loader": "^0.16.1",
     "webpack": "^2.3.2"
   }

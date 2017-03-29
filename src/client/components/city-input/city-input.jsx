@@ -126,3 +126,6 @@ CityInput.propTypes = {
 };
 
 export default connect()(CityInput);
+export {
+  CityInput,
+};
