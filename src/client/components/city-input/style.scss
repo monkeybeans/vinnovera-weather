@@ -1,6 +1,7 @@
 $background-from: #FBF9EE;
 $background-to: #E8ECE7;
 $confirm-color: #D0D752;
+$text-color: #000;
 
 .city-input {
   background: linear-gradient(125deg, $background-from 0%, $background-to 100%) no-repeat center center fixed;
@@ -8,22 +9,24 @@ $confirm-color: #D0D752;
   padding: 4rem 5rem;
   margin-top: 50%;
   text-align: center;
-
-  > {
-    display: inline-block;
-  }
+  display: flex;
+  flex-direction: column;
+  max-height: 26rem;
 
   div:first-child {
     padding: 2rem;
   }
 
-  &__search {
+  &__enter-box {
+    box-shadow: 13px 12px 15px grey;
     background: #FFF;
+  }
+
+  &__input-and-add {
     display: flex;
     flex-direction: row;
     align-content: center;
     justify-content: space-between;
-    box-shadow: 13px 12px 15px grey;
 
     /* location */
     label {
@@ -52,15 +55,23 @@ $confirm-color: #D0D752;
   }
 
   &__suggestions {
+    border-top: 1px solid #ccc;
+    color: $text-color;
+    background: #fff;
+
     /* select match */
-    select {
+    button {
+      background: inherit;
+      border: none;
+      padding: .5rem 0;
       display: block;
       width: 100%;
-      border: none;
       border-radius: 0;
-      //-webkit-appearance: none;
-      box-shadow: 13px 6px 15px grey;
+    }
 
+    button:hover {
+      background: #eee;
+      text-decoration: none;
     }
   }
 }

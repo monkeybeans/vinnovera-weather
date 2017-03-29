@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { fetchCityId } from '../../api';
 import { addCity } from '../../data-flow';
 
+const capitalize = string => string ? string.replace(/\b\w/g, l => l.toUpperCase()) : '';
+
 class CityInput extends React.Component {
   constructor(props) {
     super(props);
@@ -12,42 +14,59 @@ class CityInput extends React.Component {
       selectedCityId: null,
       cityModels: [],
     };
+
     this.updateLocation = this.updateLocation.bind(this);
-    this.onSelectCity = this.onSelectCity.bind(this);
     this.onAddCity = this.onAddCity.bind(this);
+    this.onChooseCity = this.onChooseCity.bind(this);
+    this.buildInputAndAddCity = this.buildInputAndAddCity.bind(this);
+    this.buildSuggestions = this.buildSuggestions.bind(this);
   }
 
   onAddCity() {
-    const cityId = this.select ? this.select.value : -1;
-    const choosenCityModel = this.state.cityModels.filter(m => m.id == cityId).pop();
+    const choosenCityModel = this.getCityModel(this.state.selectedCityId);
 
     if (!choosenCityModel || !choosenCityModel.valid()) { return; }
 
-    addCity(this.props.dispatch, this.select.value);
+    addCity(this.props.dispatch, this.state.selectedCityId);
     this.setState({
-      location: '',
+      inputCity: '',
+      inputCountryCode: '',
       selectedCityId: null,
       cityModels: [],
     });
   }
 
-  onSelectCity(e) {
-    const el = e.currentTarget;
-    const cityId = el.options[el.selectedIndex].value;
-    console.info('Select id: ', cityId);
+  onChooseCity(e) {
+    e.preventDefault();
+
+    const elem = e.currentTarget;
+    const cityId = elem.value;
+    const model = this.getCityModel(cityId);
+
     this.setState({
+      inputCity: model.name,
+      inputCountryCode: model.countryCode,
       selectedCityId: cityId,
     });
+  }
+
+  getCityModel(cityId) {
+    return this.state.cityModels.filter(m => m.id === Number.parseInt(cityId, 10)).pop();
   }
 
   updateLocation(e) {
     const location = e.currentTarget.value.trim();
 
-    this.setState({ location });
+    this.setState({
+      inputCity: location,
+    });
+
     fetchCityId(location)
     .then((cityModels) => {
       this.setState({
         cityModels,
+        inputCountryCode: cityModels.length === 1 ? cityModels[0].countryCode : '',
+        selectedCityId: cityModels.length === 1 ? cityModels[0].id : null,
       });
     })
     .catch((err) => {
@@ -55,18 +74,35 @@ class CityInput extends React.Component {
     });
   }
 
-  renderSuggestions() {
-    if (this.state.cityModels.length === 0) {
+  buildInputAndAddCity() {
+    const countryCodePart = capitalize(this.state.inputCountryCode ? `, ${this.state.inputCountryCode}` : '');
+    const location = capitalize(this.state.inputCity);
+
+    return (
+      <div className="city-input__input-and-add">
+        <label htmlFor="input-city-name">Location:
+          <input id="input-city-name" autoFocus type="text" value={location} onChange={this.updateLocation} placeholder="Enter a city name..." />
+          <span>{ countryCodePart }</span>
+        </label>
+        <button onClick={this.onAddCity}>+</button>
+      </div>
+    );
+  }
+
+  buildSuggestions() {
+    if (this.state.cityModels.length <= 1 || this.state.selectedCityId) {
       return null;
     }
 
     return (
       <div className="city-input__suggestions">
-        <select ref={(select) => { this.select = select; }}>
-          {
-            this.state.cityModels.map(c => <option value={c.id} key={`${c.id}-${c.name}-${c.countryCode}`}>{ `${c.name}, ${c.countryCode}` }</option>)
-          }
-        </select>
+        {
+          this.state.cityModels.map((c) => {
+            const key = `${c.id}-${c.name}-${c.countryCode}`;
+            const text = capitalize(`${c.name}, ${c.countryCode}`);
+            return <button key={key} value={c.id} onClick={this.onChooseCity}>{text}</button>;
+          })
+        }
       </div>
     );
   }
@@ -75,13 +111,10 @@ class CityInput extends React.Component {
     return (
       <div className="city-input">
         <div className="pacifico">How&#39;s the weather in...</div>
-        <div className="city-input__search">
-          <label htmlFor="input-city-name">Location:
-            <input id="input-city-name" type="text" value={this.state.location} onChange={this.updateLocation} placeholder="Enter a city name..." />
-          </label>
-          <button onClick={this.onAddCity}>+</button>
+        <div className="city-input__enter-box">
+          { this.buildInputAndAddCity() }
+          { this.buildSuggestions() }
         </div>
-        { this.renderSuggestions() }
       </div>
     );
   }
