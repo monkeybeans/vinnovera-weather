@@ -17,7 +17,7 @@ class Weathers extends React.Component {
 }
 
 Weathers.propTypes = {
-  state: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  state: React.PropTypes.arrayOf(React.PropTypes.any).isRequired, // TODO: do proper validation
 };
 
 function mapStateToProps(state) {

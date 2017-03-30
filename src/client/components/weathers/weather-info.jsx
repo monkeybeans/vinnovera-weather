@@ -52,7 +52,6 @@ class WeatherInfo extends React.Component {
 
     fetchWeather(cityId)
     .then((weatherModel) => {
-      console.log('weatherModel: ', weatherModel);
       self.setState({ weatherModel });
     })
     .catch((err) => { console.error(`COULD NOT FETCH WEATHER FOR ${cityId}: ${err}`); });
@@ -84,7 +83,7 @@ class WeatherInfo extends React.Component {
 }
 
 WeatherInfo.propTypes = {
-  cityId: React.PropTypes.string.isRequired,
+  cityId: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired, // TODO: do better validation
   dispatch: React.PropTypes.func.isRequired,
 };
 
