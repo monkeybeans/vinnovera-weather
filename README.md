@@ -18,11 +18,10 @@ the output will tell you what to do from there...
 * ~~input box for cities~~
 * ~~container for city weathers~~
 * app with responseive basic styling
-
-## Extras
+* add icon image for the weather
 * precache big cities
 * elastic search for cities
 * deploy on public server
 * speed up loading time
-* preserve state with a cookie
+* preserve state with a cookie/localstorage
 * add style prefix
