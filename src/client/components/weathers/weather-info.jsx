@@ -13,7 +13,7 @@ const calculateTempFeeling = (temp) => {
     return 'warm';
   } else if (temprature > 5) {
     return 'cold';
-  } else if (temprature < -5) {
+  } else if (temprature < 5) {
     return 'freezing';
   }
 
@@ -26,8 +26,11 @@ class WeatherInfo extends React.Component {
     super(props);
 
     this.onRemove = this.onRemove.bind(this);
+    this.updateWeather = this.updateWeather.bind(this);
+
     this.state = {
       weatherModel: new WeatherModel(),
+      updateInterValId: setInterval(this.updateWeather, 1000 * 60 * 10),
     };
   }
 
@@ -37,6 +40,10 @@ class WeatherInfo extends React.Component {
 
   onRemove() {
     removeCity(this.props.dispatch, this.props.cityId);
+  }
+
+  componentWillUnMount() {
+    clearInterval(this.state.updateInterValId);
   }
 
   updateWeather() {
@@ -54,7 +61,7 @@ class WeatherInfo extends React.Component {
   render() {
     const { weatherModel } = this.state;
     const tempFeel = calculateTempFeeling(weatherModel.temprature);
-    let content = <div>Waiting for data, could take up to 10 minutes...</div>;
+    let content = <div className="weather-info__content--waiting">Waiting for data, could take up to 10 minutes...</div>;
     if (weatherModel.valid()) {
       content = (
         <div className="weather-info__content">

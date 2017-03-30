@@ -5,6 +5,9 @@ Weather app for world cities
 # Usage
 ```
 npm install
+
+npm run build:client
+
 npm start
 
 the output will tell you what to do from there...

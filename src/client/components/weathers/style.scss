@@ -25,7 +25,7 @@
   width: 40rem;
   position: relative;
   background-color: grey;
-  margin: 0 1rem;
+  margin: 0 3rem 5rem 3rem;
   color: #fff;
 
 
@@ -48,6 +48,10 @@
     align-items: center;
     justify-content: space-between;
     height: 100%;
+  }
+
+  &__content--waiting {
+    padding: 4rem;
   }
 
   &__icon {
